@@ -14,7 +14,7 @@ function SideBar(props) {
     <div className="w-64 shadow-md">
       <div className="px-4 py-6">
         {/* Logo placeholder */}
-        <div className="h-12 w-12 bg-blue-500 rounded-full mb-6">
+        <div className="h-12 w-12 bg-blue-500 rounded-full mb-6 ">
           <img
             className="rounded-full"
             src="https://unsplash.it/100/100?image=1021"
@@ -27,7 +27,14 @@ function SideBar(props) {
             className="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md mb-2"
           >
             <span className="h-6 w-6 bg-blue-500 rounded mr-3"></span>
-            My Posts
+            Home
+          </a>
+          <a
+            href="#"
+            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
+          >
+            <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
+            My Post
           </a>
           <a
             href="#"
