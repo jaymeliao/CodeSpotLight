@@ -22,7 +22,7 @@ function MainContentSection(props) {
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-gray-700">Ryan L</p>
-                <p className="text-xs text-gray-500">The world's most powerful superhero </p>
+                <p className="text-xs text-gray-500">The world's most powerful super man </p>
               </div>
             </div>
 
