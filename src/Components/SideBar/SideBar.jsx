@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHashtag} from "@fortawesome/free-solid-svg-icons";
+import "./SideBar.scss"
 function truncateString(str, num) {
   if (str.length <= num) {
     return str;
@@ -11,13 +13,13 @@ function truncateString(str, num) {
 
 function SideBar(props) {
   return (
-    <div className="w-64 shadow-md">
+    <div className="w-96 shadow-md bg-white my-4">
       <div className="px-4 py-6">
         {/* Logo placeholder */}
         <div className="h-12 w-12 bg-blue-500 rounded-full mb-6 ">
           <img
             className="rounded-full"
-            src="https://unsplash.it/100/100?image=1021"
+            src="https://unsplash.it/100/100?image=1027"
             alt="Profile picture"
           />
         </div>
@@ -62,16 +64,16 @@ function SideBar(props) {
       <div className="px-4 py-6 border-t border-gray-200">
         <p className="text-xs text-gray-600 uppercase mb-4">My Tags</p>
         <div className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2">
-          <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-          Herpicons
+        <span className="h-6 w-6 rounded mr-3"><FontAwesomeIcon icon={faHashtag} /></span>
+          typescript
         </div>
         <div className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2">
-          <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-          Tailwind Labs
+          <span className="h-6 w-6 rounded mr-3"><FontAwesomeIcon icon={faHashtag} /></span>
+          database
         </div>
         <div className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
-          <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-          Workcation
+        <span className="h-6 w-6 rounded mr-3"><FontAwesomeIcon icon={faHashtag} /></span>
+          aws
         </div>
       </div>
       <div className="px-4 py-6 border-t border-gray-200">

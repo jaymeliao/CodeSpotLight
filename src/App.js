@@ -1,13 +1,14 @@
 
 import './App.css';
+import HomeFeed from './Pages/HomeFeed/HomeFeed';
 import Header from './Components/Header/Header';
-import SideBar from './Components/Header/SideBar/SideBar';
+import Setting from './Pages/Setting/Setting';
 
 function App() {
   return (
     <div className="App">
-      <Header/> 
-      <SideBar/>
+      <Header/>
+      <HomeFeed/>
     </div>
   );
 }
