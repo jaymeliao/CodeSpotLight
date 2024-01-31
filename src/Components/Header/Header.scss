@@ -1,13 +1,15 @@
 .input-inner-icon {
   width: 24px;
   height: 24px;
-  background-color: #d1d5db;
+  // background-color: #d1d5db;
   border-radius: 50%;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color:#d1d5db;
 }
 
 .icon {
-   
     background-color: #d1d5db;
     text-align: center;
     display: flex;

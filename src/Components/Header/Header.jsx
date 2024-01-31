@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faComment, faBell } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faComment, faBell, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "./Header.scss";
 
 function Header() {
@@ -17,7 +17,7 @@ function Header() {
             className="pl-10 pr-4 py-2 border rounded-full w-64"
           />
           <div className="absolute left-0 top-0 mt-2 ml-3">
-            <div className="input-inner-icon"></div>
+            <div className="input-inner-icon"><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
           </div>
         </div>
       </div>
