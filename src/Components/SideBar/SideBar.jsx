@@ -11,11 +11,10 @@ function truncateString(str, num) {
   return str.slice(0, num) + "...";
 }
 
-function SideBar(props) {
+function SideBar({user}) {
   return (
     <div className="w-96 shadow-md bg-white my-4">
       <div className="px-4 py-6">
-        {/* Logo placeholder */}
         <div className="h-12 w-12 bg-blue-500 rounded-full mb-6 ">
           <img
             className="rounded-full"

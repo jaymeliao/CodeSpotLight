@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import "./App.scss";
 import Header from "./Components/Header/Header";
-import HomeFeed from "./Pages/HomeFeed/HomeFeed";
-import FeedPostsList from "./Components/FeedPostsList/FeedPostsList";
+import HomePage from "./Pages/HomePage/HomePage";
+import LoginPage from "./Pages/LoginPage/LoginPage";
 
 function App() {
   const [user, setUser] = useState({});
@@ -26,7 +26,7 @@ function App() {
         });
         setLoggedIn(true);
         setUser(response.data.user);
-        console.log(response.data.user+"is logged in.")
+        console.log(response.data.user);
       } catch (err) {
         console.error(err.response.data.message);
         setError("Error getting user data");
@@ -47,7 +47,7 @@ function App() {
       });
 
       localStorage.setItem("token", response.data.token); // save token in localStorage
-       
+
       if (response.data.token) {
         // get user data using token
         const userResponse = await axios.get("http://localhost:8080/user", {
@@ -58,6 +58,7 @@ function App() {
 
         setLoggedIn(true);
         setUser(userResponse.data.user); // save decoded user data in state
+        console.log(response.data.user);
         setError("");
       }
     } catch (err) {
@@ -78,29 +79,18 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header loggedIn={loggedIn} handleLogout={handleLogout}/>
         <Routes>
-          <Route path="/" element={<FeedPostsList/>}/>
+          <Route
+            path="/"
+            element={
+              loggedIn ? (
+                <HomePage user={user} handleLogout={handleLogout}/>
+              ) : (
+                <LoginPage handleLogin={handleLogin} error={error} />
+              )
+            }
+          />
         </Routes>
-
-        {!loggedIn && (
-          <form onSubmit={handleLogin}>
-            <input
-              type="text"
-              name="username"
-              placeholder="username"
-              autoComplete="username"
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="password"
-              autoComplete="current-password"
-            />
-            <button type="submit">Login</button>
-            {error && <p>{error}</p>}
-          </form>
-        )}
       </div>
     </BrowserRouter>
   );

@@ -1,15 +1,17 @@
 import React from "react";
+import "./HomePage.scss"
 import SideBar from "../../Components/SideBar/SideBar";
-import MainContentSection from "../../Components/FeedPostsList/FeedPostsList";
 import FeedPostsList from "../../Components/FeedPostsList/FeedPostsList";
-import "./HomeFeed.scss"
-function HomeFeed(props) {
+import Header from "../../Components/Header/Header";
+function HomePage({user, handleLogout}) {
   return (
       <div className="jm-main-section min-h-screen flex bg-gray-50 text-gray-900">
-      
+        <Header user={user} handleLogout={handleLogout} />
+        <SideBar user={user}/>
+        <FeedPostsList/>
       </div>
  
   );
 }
 
-export default HomeFeed;
+export default HomePage;
