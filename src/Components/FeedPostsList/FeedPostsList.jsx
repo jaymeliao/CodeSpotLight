@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
 
-function MainContentSection(props) {
+function FeedPostsList(props) {
   return (
     <div className="container mx-auto p-4">
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -84,7 +84,7 @@ function MainContentSection(props) {
           </article>
         </div>
         <aside className="hidden md:block md:col-span-1">
-          <div class="h-96 w-full bg-white rounded shadow-md p-4 ">
+          <div className="h-96 w-full bg-white rounded shadow-md p-4 ">
             <h1>
               Additional bull-shit content like trends or suggestions placed
               here
@@ -96,4 +96,4 @@ function MainContentSection(props) {
   );
 }
 
-export default MainContentSection;
+export default FeedPostsList;

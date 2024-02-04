@@ -9,12 +9,14 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Header.scss";
+
+
 const DropdownMenu = ({ children }) => {
   return (
     <div className="bg-white shadow-md rounded p-2 jm-dropdown-menu">{children}</div>
   );
 };
-function Header() {
+function Header({loggedIn}) {
   const [dropdown, setDropdown] = useState("");
   const handleLogout = () => {
     // Implement your logout logic here
@@ -43,6 +45,7 @@ function Header() {
           </div>
         </div>
       </div>
+     {loggedIn &&
       <nav className="flex items-center relative">
         <div className="mx-4" onClick={() => toggleDropdown("plus")}>
           <div className="icon h-10 w-10 rounded-full">
@@ -103,7 +106,7 @@ function Header() {
             </DropdownMenu>
           )}
         </div>
-      </nav>
+      </nav>}
     </header>
   );
 }
