@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Import Link
+import { Link } from "react-router-dom";
 
 function LoginPage({ error, handleLogin }) {
   return (
@@ -20,7 +20,6 @@ function LoginPage({ error, handleLogin }) {
         <form className="space-y-6" onSubmit={handleLogin}>
           <div>
             <label
-              htmlFor="email"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Username
@@ -38,7 +37,6 @@ function LoginPage({ error, handleLogin }) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                htmlFor="password"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Password
@@ -70,7 +68,7 @@ function LoginPage({ error, handleLogin }) {
             >
               Log In
             </button>
-            {error && <p>{error}</p>}
+            {error && <p className="mt-3 text-center text-sm font-medium text-red-600">{error}</p>}
           </div>
         </form>
 

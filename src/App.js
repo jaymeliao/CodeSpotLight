@@ -62,7 +62,7 @@ function App() {
       }
     } catch (err) {
       console.error(err.response.data.message);
-      setError("error logging in");
+      setError("Error Login: Please check your username or password.");
     }
   };
 
