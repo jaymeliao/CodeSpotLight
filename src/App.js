@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import "./App.scss";
-import Header from "./Components/Header/Header";
 import HomePage from "./Pages/HomePage/HomePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
+import SignUpPage from "./Pages/SignUpPage/SignUpPage";
 
 function App() {
   const [user, setUser] = useState({});
@@ -66,6 +66,30 @@ function App() {
     }
   };
 
+  const handleLoginAfterSignup = async (username, password) => {
+    try {
+      const response = await axios.post("http://localhost:8080/login", {
+        username,
+        password,
+      });
+
+      localStorage.setItem("token", response.data.token);
+      const userResponse = await axios.get("http://localhost:8080/user", {
+        headers: {
+          Authorization: `Bearer ${response.data.token}`,
+        },
+      });
+
+      setLoggedIn(true);
+      setUser(userResponse.data.user);
+    } catch (err) {
+      console.error(
+        err.response?.data?.message || "Automatic login after signup failed"
+      );
+      setError("Automatic login after signup failed");
+    }
+  };
+
   /*
    * Logout of application, clears localStorage JWT token and set state to logged out
    */
@@ -83,10 +107,16 @@ function App() {
             path="/"
             element={
               loggedIn ? (
-                <HomePage user={user} handleLogout={handleLogout}/>
+                <HomePage user={user} handleLogout={handleLogout} />
               ) : (
                 <LoginPage handleLogin={handleLogin} error={error} />
               )
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <SignUpPage handleLoginAfterSignup={handleLoginAfterSignup} />
             }
           />
         </Routes>
