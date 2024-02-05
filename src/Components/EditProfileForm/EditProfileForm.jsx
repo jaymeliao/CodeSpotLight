@@ -42,7 +42,7 @@ function EditProfileForm({ user, setShowModal }) {
   };
 
   const handleSubmit = async (e) => {
-    //e.preventDefault();
+    //e.preventDefault(); // i will umcomment this
     const updatedFormData = new FormData();
     Object.keys(formData).forEach((key) => {
       if (formData[key] !== null && formData[key] !== user[key]) {
