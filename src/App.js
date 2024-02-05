@@ -8,6 +8,7 @@ import SignUpPage from "./Pages/SignUpPage/SignUpPage";
 import EditProfileForm from "./Components/EditProfileForm/EditProfileForm";
 
 function App() {
+  
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
@@ -120,9 +121,9 @@ function App() {
             }
           />
           <Route
-            path="/setting"
+            path="*"
             element={
-             <EditProfileForm user={user}/>
+             <h1>Wrong Way : 404 not found</h1>
             }
           />
         </Routes>
