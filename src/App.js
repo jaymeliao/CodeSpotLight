@@ -58,7 +58,6 @@ function App() {
 
         setLoggedIn(true);
         setUser(userResponse.data.user); // save decoded user data in state
-        console.log(response.data.user);
         setError("");
       }
     } catch (err) {

@@ -2,76 +2,102 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHashtag} from "@fortawesome/free-solid-svg-icons";
-import "./SideBar.scss"
-function truncateString(str, num) {
+import { faHashtag } from "@fortawesome/free-solid-svg-icons";
+import "./SideBar.scss";
+const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
+
+function truncateString(str, num = 10) {
   if (str.length <= num) {
     return str;
   }
   return str.slice(0, num) + "...";
 }
 
-function SideBar({user}) {
+function SideBar({ user }) {
   return (
     <div className="w-96 shadow-md bg-white my-4">
-      <div className="px-4 py-6">
-        <div className="h-12 w-12 bg-blue-500 rounded-full mb-6 ">
+      <div className="flex flex-col items-center justify-center mt-1 py-3 px-4">
+        <div className="h-24 w-24 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
           <img
-            className="rounded-full"
-            src="https://unsplash.it/100/100?image=1027"
+            className="rounded-full h-24 w-24 object-cover" // Ensure the image covers the area well
+            src={
+              user?.profile_picture_url
+                ? user.profile_picture_url
+                : blankProfile
+            }
             alt="Profile picture"
           />
         </div>
-        <nav>
-          <a
-            href="#"
-            className="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md mb-2"
-          >
-            <span className="h-6 w-6 bg-blue-500 rounded mr-3"></span>
-            Home
-          </a>
-          <a
-            href="#"
-            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
-          >
-            <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-            My Post
-          </a>
-          <a
-            href="#"
-            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
-          >
-            <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-            Liked Post
-          </a>
-          <a
-            href="#"
-            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
-          >
-            <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-            BookMarked Post
-          </a>
-          <a
-            href="#"
-            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
-          >
-            <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-            Draft
-          </a>
-        </nav>
+        <div className="text-center mt-3">
+          <p className="text-m font-medium text-gray-700">
+            {truncateString(user?.name || user?.username)}
+          </p>
+          <p className="text-xs text-gray-500">@{user?.username}</p>
+        </div>
       </div>
+
+      <p className="px-4 mb-4 text-gray-700 text-center">
+        Hello! I’m Ivy, a passionate software engineer with over 5 years of
+        experience specializing in full-stack web development, mobile app
+        development, cloud computing.
+      </p>
+
+      <nav className="px-4" >
+        <a
+          href="#"
+          className="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md mb-2"
+        >
+          <span className="h-6 w-6 bg-blue-500 rounded mr-3"></span>
+          Home
+        </a>
+        <a
+          href="#"
+          className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
+        >
+          <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
+          My Post
+        </a>
+        <a
+          href="#"
+          className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
+        >
+          <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
+          Liked Post
+        </a>
+        <a
+          href="#"
+          className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
+        >
+          <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
+          BookMarked Post
+        </a>
+        <a
+          href="#"
+          className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
+        >
+          <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
+          Draft
+        </a>
+      </nav>
+
       <div className="px-4 py-6 border-t border-gray-200">
         <p className="text-xs text-gray-600 uppercase mb-4">My Tags</p>
         <div className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2">
-        <span className="h-6 w-6 rounded mr-3"><FontAwesomeIcon icon={faHashtag} /></span>
+          <span className="h-6 w-6 rounded mr-3">
+            <FontAwesomeIcon icon={faHashtag} />
+          </span>
           typescript
         </div>
         <div className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2">
-          <span className="h-6 w-6 rounded mr-3"><FontAwesomeIcon icon={faHashtag} /></span>
+          <span className="h-6 w-6 rounded mr-3">
+            <FontAwesomeIcon icon={faHashtag} />
+          </span>
           database
         </div>
         <div className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
-        <span className="h-6 w-6 rounded mr-3"><FontAwesomeIcon icon={faHashtag} /></span>
+          <span className="h-6 w-6 rounded mr-3">
+            <FontAwesomeIcon icon={faHashtag} />
+          </span>
           aws
         </div>
       </div>
