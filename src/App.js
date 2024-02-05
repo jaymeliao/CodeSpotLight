@@ -5,7 +5,7 @@ import "./App.scss";
 import HomePage from "./Pages/HomePage/HomePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignUpPage from "./Pages/SignUpPage/SignUpPage";
-import SettingPage from "./Pages/SettingPage/SettingPage";
+import EditProfileForm from "./Components/EditProfileForm/EditProfileForm";
 
 function App() {
   const [user, setUser] = useState({});
@@ -20,7 +20,7 @@ function App() {
     const token = localStorage.getItem("token");
     const getUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/user", {
+        const response = await axios.get("http://localhost:8080/auth/user", {
           headers: {
             Authorization: `Bearer ${token}`, // send token as auth header
           },
@@ -42,7 +42,7 @@ function App() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/login", {
+      const response = await axios.post("http://localhost:8080/auth/login", {
         username: event.target.username.value,
         password: event.target.password.value,
       });
@@ -51,7 +51,7 @@ function App() {
 
       if (response.data.token) {
         // get user data using token
-        const userResponse = await axios.get("http://localhost:8080/user", {
+        const userResponse = await axios.get("http://localhost:8080/auth/user", {
           headers: {
             Authorization: `Bearer ${response.data.token}`,
           },
@@ -62,20 +62,19 @@ function App() {
         setError("");
       }
     } catch (err) {
-      console.error(err.response.data.message);
       setError("Error Login: Please check your username or password.");
     }
   };
 
   const handleLoginAfterSignup = async (username, password) => {
     try {
-      const response = await axios.post("http://localhost:8080/login", {
+      const response = await axios.post("http://localhost:8080/auth/login", {
         username,
         password,
       });
 
       localStorage.setItem("token", response.data.token);
-      const userResponse = await axios.get("http://localhost:8080/user", {
+      const userResponse = await axios.get("http://localhost:8080/auth/user", {
         headers: {
           Authorization: `Bearer ${response.data.token}`,
         },
@@ -123,7 +122,7 @@ function App() {
           <Route
             path="/setting"
             element={
-             <SettingPage user={user} handleLogout={handleLogout}/>
+             <EditProfileForm user={user}/>
             }
           />
         </Routes>

@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+
+// TODO : implement in the future !!
 import React from "react";
 import "./SettingPage.scss";
 function SettingPage({ user, handleLogout }) {

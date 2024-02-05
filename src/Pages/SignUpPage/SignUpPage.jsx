@@ -27,14 +27,12 @@ function SignupPage({ handleLoginAfterSignup }) {
         password: event.target.password.value,
       };
       const response = await axios.post(
-        "http://localhost:8080/signup",
+        "http://localhost:8080/auth/signup",
         newAccount
       );
-      console.log("Signup successful", response.data);
       await handleLoginAfterSignup(newAccount.username, newAccount.password);
       navigate("/");
     } catch (err) {
-      console.log(err);
       if (err.response && err.response.status === 409) {
         setError(
           err.response.data.error ||
