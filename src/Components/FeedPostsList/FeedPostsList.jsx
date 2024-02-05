@@ -86,7 +86,7 @@ function FeedPostsList(props) {
         <aside className="hidden md:block md:col-span-1">
           <div className="h-96 w-full bg-white rounded shadow-md p-4 ">
             <h1>
-              Additional bull-shit content like trends or suggestions placed
+              Additional content like trends or suggestions placed
               here
             </h1>
           </div>

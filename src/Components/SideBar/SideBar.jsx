@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHashtag } from "@fortawesome/free-solid-svg-icons";
+import { faHashtag, faPen } from "@fortawesome/free-solid-svg-icons";
 import "./SideBar.scss";
 const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
 
@@ -15,8 +15,13 @@ function truncateString(str, num = 10) {
 
 function SideBar({ user }) {
   return (
-    <div className="w-96 shadow-md bg-white my-4">
-      <div className="flex flex-col items-center justify-center mt-1 py-3 px-4">
+    <div className="w-96 shadow-md bg-white my-4 ">
+      <div className="flex justify-end">
+        <button className="text-blue-500 hover:bg-blue-500 hover:text-white font-bold py-1 px-4">
+          <FontAwesomeIcon icon={faPen} />
+        </button>
+      </div>
+      <div className="flex flex-col items-center justify-center pb-3">
         <div className="h-24 w-24 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
           <img
             className="rounded-full h-24 w-24 object-cover" // Ensure the image covers the area well
@@ -35,14 +40,13 @@ function SideBar({ user }) {
           <p className="text-xs text-gray-500">@{user?.username}</p>
         </div>
       </div>
-
       <p className="px-4 mb-4 text-gray-700 text-center">
         Hello! I’m Ivy, a passionate software engineer with over 5 years of
         experience specializing in full-stack web development, mobile app
         development, cloud computing.
       </p>
 
-      <nav className="px-4" >
+      <nav className="px-4">
         <a
           href="#"
           className="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md mb-2"

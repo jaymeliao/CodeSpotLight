@@ -5,6 +5,7 @@ import "./App.scss";
 import HomePage from "./Pages/HomePage/HomePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignUpPage from "./Pages/SignUpPage/SignUpPage";
+import SettingPage from "./Pages/SettingPage/SettingPage";
 
 function App() {
   const [user, setUser] = useState({});
@@ -117,6 +118,12 @@ function App() {
             path="/signup"
             element={
               <SignUpPage handleLoginAfterSignup={handleLoginAfterSignup} />
+            }
+          />
+          <Route
+            path="/setting"
+            element={
+             <SettingPage user={user} handleLogout={handleLogout}/>
             }
           />
         </Routes>
