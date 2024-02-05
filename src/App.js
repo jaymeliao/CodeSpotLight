@@ -20,7 +20,7 @@ function App() {
     const token = localStorage.getItem("token");
     const getUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/auth/user", {
+        const response = await axios.get("http://localhost:8080/user", {
           headers: {
             Authorization: `Bearer ${token}`, // send token as auth header
           },
@@ -51,7 +51,7 @@ function App() {
 
       if (response.data.token) {
         // get user data using token
-        const userResponse = await axios.get("http://localhost:8080/auth/user", {
+        const userResponse = await axios.get("http://localhost:8080/user", {
           headers: {
             Authorization: `Bearer ${response.data.token}`,
           },
@@ -74,7 +74,7 @@ function App() {
       });
 
       localStorage.setItem("token", response.data.token);
-      const userResponse = await axios.get("http://localhost:8080/auth/user", {
+      const userResponse = await axios.get("http://localhost:8080/user", {
         headers: {
           Authorization: `Bearer ${response.data.token}`,
         },

@@ -1,13 +1,68 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./EditProfileForm.scss";
-function EditProfileForm({ className, user, setShowModal }) {
+import axios from "axios";
+
+function EditProfileForm({ user, setShowModal }) {
+  const [formData, setFormData] = useState({
+    name: user.name || "",
+    username: user.username || "",
+    email: user.email || "",
+    self_intro: user.self_intro || "",
+    profile_picture: null, // For file inputs, start with null
+  });
+
+  useEffect(() => {
+    // Initialize formData state when component mounts or user data changes
+    setFormData({
+      name: user.name || "",
+      username: user.username || "",
+      email: user.email || "",
+      self_intro: user.self_intro || "",
+      profile_picture: null,
+    });
+  }, [user]);
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "profile_picture") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: files ? files[0] : null, // Store the selected file
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
+  };
+
   const handleCancel = () => {
     setShowModal(false);
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    setShowModal(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const updatedFormData = new FormData();
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] !== null && formData[key] !== user[key]) {
+        updatedFormData.append(key, formData[key]);
+      }
+    });
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.patch("http://localhost:8080/user", updatedFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setShowModal(false);
+    } catch (error) {
+      console.log(error)
+      console.error("Error updating profile:", error);
+    }
   };
 
   return (
@@ -31,7 +86,9 @@ function EditProfileForm({ className, user, setShowModal }) {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="fullname"
+                    name="name"
+                    value={formData["name"]}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -44,13 +101,15 @@ function EditProfileForm({ className, user, setShowModal }) {
                   Username
                 </label>
                 <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300  sm:max-w-md">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md">
                     <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
-                      @ 
+                      @
                     </span>
                     <input
                       type="text"
                       name="username"
+                      value={formData["username"]}
+                      onChange={handleChange}
                       className="block flex-1 border-0 bg-transparent py-1.5 px-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -68,8 +127,9 @@ function EditProfileForm({ className, user, setShowModal }) {
                   <textarea
                     name="self_intro"
                     rows={3}
+                    value={formData["self_intro"]}
+                    onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={user.self_intro || ""}
                   />
                 </div>
                 <p className="mt-3 text-sm leading-6 text-gray-600">
@@ -79,15 +139,16 @@ function EditProfileForm({ className, user, setShowModal }) {
 
               <div className="col-span-full">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Photo
+                  Profile Photo
                 </label>
+
                 <div className="mt-2 flex items-center gap-x-3">
-                  <button
-                    type="button"
-                    className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    Upload Profile Photo
-                  </button>
+                  <input
+                    type="file"
+                    className="form-control-file"
+                    name="profile_picture"
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
             </div>
