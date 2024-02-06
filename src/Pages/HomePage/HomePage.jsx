@@ -6,7 +6,7 @@ import Header from "../../Components/Header/Header";
 import axios from "axios";
 const apiUrl = process.env.REACT_APP_API_URL;
 
-function HomePage({ user, handleLogout }) {
+function HomePage({ user, handleLogout, setUser }) {
   const [showModal, setShowModal] = useState(false);
 
   const handleEditClick = () => {
@@ -68,6 +68,9 @@ function HomePage({ user, handleLogout }) {
           Authorization: `Bearer ${token}`,
         },
       });
+      // Update the user prop with the new user data
+      const updatedUser = { ...user, ...formData };
+      setUser(updatedUser);
       setShowModal(false);
     } catch (error) {
       console.log(error);
@@ -80,7 +83,7 @@ function HomePage({ user, handleLogout }) {
       <Header user={user} handleLogout={handleLogout} />
       <SideBar
         user={user}
-        formData={formData} 
+        formData={formData}
         setFormData={setFormData}
         handleEditClick={handleEditClick}
         showModal={showModal}

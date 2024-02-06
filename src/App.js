@@ -113,7 +113,7 @@ function App() {
           loggedIn ? (
             <Route
               path="/"
-              element={<HomePage user={user} handleLogout={handleLogout} />}
+              element={<HomePage user={user} setUser={setUser} handleLogout={handleLogout} />}
             />
           ) : (
             <Route
