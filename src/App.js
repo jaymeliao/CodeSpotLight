@@ -5,13 +5,13 @@ import "./App.scss";
 import HomePage from "./Pages/HomePage/HomePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignUpPage from "./Pages/SignUpPage/SignUpPage";
-import EditProfileForm from "./Components/EditProfileForm/EditProfileForm";
+
 
 function App() {
-  
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -19,26 +19,27 @@ function App() {
    * Component Mount, if JWT token is set the user is still considered logged in
    */
   useEffect(() => {
-    // get token from localStorage if it exists/is set
     const token = localStorage.getItem("token");
     const getUserData = async () => {
       try {
         const response = await axios.get(`${apiUrl}/user`, {
           headers: {
-            Authorization: `Bearer ${token}`, // send token as auth header
+            Authorization: `Bearer ${token}`,
           },
         });
         setLoggedIn(true);
         setUser(response.data.user);
-        console.log(response.data.user);
+        setLoading(false); // Set loading to false after successful fetch
       } catch (err) {
         console.error(err.response.data.message);
         setError("Error getting user data");
+        setLoading(false); // Set loading to false on error as well
       }
     };
     if (token) {
-      // if the token is set fetch user data with the provided token
       getUserData();
+    } else {
+      setLoading(false); // If no token, set loading to false
     }
   }, []);
 
@@ -104,33 +105,34 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="App">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              loggedIn ? (
-                <HomePage user={user} handleLogout={handleLogout} />
-              ) : (
-                <LoginPage handleLogin={handleLogin} error={error} />
-              )
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <SignUpPage handleLoginAfterSignup={handleLoginAfterSignup} />
-            }
-          />
-          <Route
-            path="*"
-            element={
-             <h1>Wrong Way : 404 not found</h1>
-            }
-          />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <div className="App">
+      <Routes>
+        {loading ? ( // Show a loading indicator while fetching user data
+          <Route path="/" element={<></>} /> // Render the Loading component
+          ) : (
+          loggedIn ? (
+            <Route
+              path="/"
+              element={<HomePage user={user} handleLogout={handleLogout} />}
+            />
+          ) : (
+            <Route
+              path="/"
+              element={<LoginPage handleLogin={handleLogin} error={error} />}
+            />
+          )
+        )}
+        <Route
+          path="/signup"
+          element={<SignUpPage handleLoginAfterSignup={handleLoginAfterSignup} />}
+        />
+        <Route
+          path="*"
+          element={<h1>Wrong Way : 404 not found</h1>}
+        />
+      </Routes>
+    </div>
+  </BrowserRouter>
   );
 }
 
