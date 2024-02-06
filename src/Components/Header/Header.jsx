@@ -99,7 +99,9 @@ function Header({user,handleLogout}) {
         >
           <img
             className="h-10 w-10 rounded-full"
-            src={user?.profile_picture_url ? `${apiUrl}/${user.profile_picture_url}` : blankProfile}
+            //src={user?.profile_picture_url ? `${apiUrl}/${user.profile_picture_url}` : blankProfile}
+            src={user?.profile_picture_url ? `${apiUrl}/${user.profile_picture_url}?${new Date().getTime()}` : blankProfile}
+            //?${new Date().getTime()} to bypassing any image caching issues.
             alt="Profile picture"
           />
           {dropdown === "Account" && (

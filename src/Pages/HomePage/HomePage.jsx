@@ -62,15 +62,16 @@ function HomePage({ user, handleLogout, setUser }) {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.patch(`${apiUrl}/user`, updatedFormData, {
+      const response = await axios.patch(`${apiUrl}/user`, updatedFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       });
       // Update the user prop with the new user data
-      const updatedUser = { ...user, ...formData };
+      const updatedUser = { ...user, ...formData};
       setUser(updatedUser);
+      console.log(updatedUser)
       setShowModal(false);
     } catch (error) {
       console.log(error);
