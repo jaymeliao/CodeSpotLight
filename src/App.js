@@ -13,6 +13,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   /*
    * Component Mount, if JWT token is set the user is still considered logged in
    */
@@ -21,7 +23,7 @@ function App() {
     const token = localStorage.getItem("token");
     const getUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/user", {
+        const response = await axios.get(`${apiUrl}/user`, {
           headers: {
             Authorization: `Bearer ${token}`, // send token as auth header
           },
@@ -43,7 +45,7 @@ function App() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", {
+      const response = await axios.post(`${apiUrl}/auth/login`, {
         username: event.target.username.value,
         password: event.target.password.value,
       });
@@ -52,7 +54,7 @@ function App() {
 
       if (response.data.token) {
         // get user data using token
-        const userResponse = await axios.get("http://localhost:8080/user", {
+        const userResponse = await axios.get(`${apiUrl}/user`, {
           headers: {
             Authorization: `Bearer ${response.data.token}`,
           },
@@ -69,13 +71,13 @@ function App() {
 
   const handleLoginAfterSignup = async (username, password) => {
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", {
+      const response = await axios.post(`${apiUrl}/auth/login`, {
         username,
         password,
       });
 
       localStorage.setItem("token", response.data.token);
-      const userResponse = await axios.get("http://localhost:8080/user", {
+      const userResponse = await axios.get(`${apiUrl}/user`, {
         headers: {
           Authorization: `Bearer ${response.data.token}`,
         },

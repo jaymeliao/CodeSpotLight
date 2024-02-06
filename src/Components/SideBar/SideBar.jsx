@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag, faPen } from "@fortawesome/free-solid-svg-icons";
 import "./SideBar.scss";
 import EditProfileForm from "../EditProfileForm/EditProfileForm";
 const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function truncateString(str, num = 10) {
   if (str.length <= num) {
@@ -14,19 +15,13 @@ function truncateString(str, num = 10) {
   return str.slice(0, num) + "...";
 }
 
-function SideBar({ user }) {
-  const [showModal, setShowModal] = useState(false);
-
-  const handleEditClick = () => {
-    setShowModal(true);
-  };
-
+function SideBar(props) {
   return (
     <>
       <div className="w-96 shadow-md bg-white my-4 ">
         <div className="flex justify-end">
           <button
-            onClick={handleEditClick}
+            onClick={props.handleEditClick}
             className="text-blue-500 hover:bg-blue-500 hover:text-white font-bold py-1 px-4"
           >
             <FontAwesomeIcon icon={faPen} />
@@ -37,8 +32,8 @@ function SideBar({ user }) {
             <img
               className="rounded-full h-24 w-24 object-cover" // Ensure the image covers the area well
               src={
-                user?.profile_picture_url
-                  ? user.profile_picture_url
+                props.user?.profile_picture_url
+                  ? `${apiUrl}/${props.user.profile_picture_url}`
                   : blankProfile
               }
               alt="Profile picture"
@@ -46,14 +41,14 @@ function SideBar({ user }) {
           </div>
           <div className="text-center mt-3">
             <p className="text-m font-medium text-gray-700">
-              {truncateString(user?.name || user?.username)}
+              {truncateString(props.user?.name || props.user?.username)}
             </p>
-            <p className="text-xs text-gray-500">@{user?.username}</p>
+            <p className="text-xs text-gray-500">@{props.user?.username}</p>
           </div>
         </div>
-        {user.self_intro ? (
+        {props.user.self_intro ? (
           <p className="px-4 mb-4 text-gray-700 text-center">
-            {user.self_intro}
+            {props.user.self_intro}
           </p>
         ) : (
           <p className="px-4 mb-4 text-gray-300 text-center">
@@ -212,7 +207,7 @@ function SideBar({ user }) {
           </div>
         </div>
       </div>
-      {showModal && <EditProfileForm user={user} setShowModal={setShowModal} />}
+      {props.showModal && <EditProfileForm {...props} />}
     </>
   );
 }

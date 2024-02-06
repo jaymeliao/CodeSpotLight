@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function SignupPage({ handleLoginAfterSignup }) {
   const [error, setError] = useState("");
@@ -27,7 +28,7 @@ function SignupPage({ handleLoginAfterSignup }) {
         password: event.target.password.value,
       };
       const response = await axios.post(
-        "http://localhost:8080/auth/signup",
+        `${apiUrl}/auth/signup`,
         newAccount
       );
       await handleLoginAfterSignup(newAccount.username, newAccount.password);

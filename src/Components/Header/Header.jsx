@@ -12,6 +12,7 @@ import {
 import "./Header.scss";
 
 const blankProfile = process.env.PUBLIC_URL + '/images/blank-profile.png';
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const DropdownMenu = ({ children }) => {
   
@@ -98,7 +99,7 @@ function Header({user,handleLogout}) {
         >
           <img
             className="h-10 w-10 rounded-full"
-            src={user?.profile_picture_url ? user.profile_picture_url : blankProfile}
+            src={user?.profile_picture_url ? `${apiUrl}/${user.profile_picture_url}` : blankProfile}
             alt="Profile picture"
           />
           {dropdown === "Account" && (
