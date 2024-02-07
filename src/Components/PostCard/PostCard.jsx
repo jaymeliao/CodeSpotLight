@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import moment from "moment"; // You may need to install moment for date formatting
 import CommentSection from "../CommentSection/CommentSection";
 const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
 const apiUrl = process.env.REACT_APP_API_URL;
 const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder;
 const PostCard = ({ post }) => {
+  const postRef = useRef(null); // Create a ref for the post
+
   const [showComments, setShowComments] = useState(false);
 
   const renderMedia = (media) => {
@@ -50,7 +52,7 @@ const PostCard = ({ post }) => {
   };
 
   return (
-    <article className="bg-white p-4 shadow rounded mb-4">
+    <article ref={postRef} className="bg-white p-4 shadow rounded mb-4">
       <div className="flex items-center mb-4">
         <img
           className="rounded-full h-14 w-14 object-cover"
@@ -87,7 +89,7 @@ const PostCard = ({ post }) => {
           Comments ({post.comments.length})
         </button>
       </div>
-      {showComments && <CommentSection post={post}/>}
+      {showComments && <CommentSection post={post} postRef={postRef}/>}
     </article>
   );
 };

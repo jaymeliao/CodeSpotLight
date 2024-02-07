@@ -4,9 +4,20 @@ import CommentItem from "../CommentItem/CommentItem";
 import axios from "axios";
 const apiUrl = process.env.REACT_APP_API_URL;
 
-function CommentSection({ post }) {
+function CommentSection({ post, postRef }) {
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(post.comments);
+  const [displayCount, setDisplayCount] = useState(3);
+  const handleViewMore = () => {
+    setDisplayCount((prevCount) => prevCount + 2);
+  };
+
+  const handleCollapse = () => {
+    setDisplayCount(3);
+    if (postRef && postRef.current) {
+      postRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +26,8 @@ function CommentSection({ post }) {
     try {
       const token = localStorage.getItem("token");
       // Use axios to post the comment
-      const response = await axios.post(`${apiUrl}/comments/new-comment`,
+      const response = await axios.post(
+        `${apiUrl}/comments/new-comment`,
         {
           postId: post.id,
           content: commentText,
@@ -30,7 +42,10 @@ function CommentSection({ post }) {
 
       // Axios directly returns the data object, no need to call .json()
       const newComment = response.data; // Assuming your backend sends the new comment as response data
-      setComments(currentComments => [...currentComments, newComment.comment]); // Use a function to ensure you're working with the most current state
+      setComments((currentComments) => [
+        newComment.comment,
+        ...currentComments,
+      ]); // Use a function to ensure you're working with the most current state
       setCommentText(""); // Reset the input field
     } catch (error) {
       console.error("Error posting comment:", error);
@@ -61,12 +76,15 @@ function CommentSection({ post }) {
           Post comment
         </button>
       </form>
-      {comments.map((comment) => (
-        <CommentItem
-          key={comment.id}
-          comment={comment}
-        />
+      {comments.slice(0, displayCount).map((comment) => (
+        <CommentItem key={comment.id} comment={comment} />
       ))}
+      {comments.length > 3 && displayCount < comments.length && (
+        <button onClick={handleViewMore} className="text-blue-500">View more comments</button>
+      )}
+      {displayCount >= comments.length && comments.length > 3 && (
+        <button onClick={handleCollapse} className="text-blue-500">Show less</button>
+      )}
     </div>
   );
 }
