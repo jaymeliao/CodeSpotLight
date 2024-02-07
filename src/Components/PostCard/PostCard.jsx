@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
-import moment from 'moment'; // You may need to install moment for date formatting
-
+import React, { useState } from "react";
+import moment from "moment"; // You may need to install moment for date formatting
+const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
+const apiUrl = process.env.REACT_APP_API_URL;
+const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder;
 const PostCard = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
 
   const renderMedia = (media) => {
-    if (media.media_type === 'image') {
-      return <img src={media.media_url} alt="Post media" style={{ width: '100%' }} />;
-    } else if (media.media_type === 'video') {
+    if (media.media_type === "image") {
       return (
-        <video width="320" height="240" controls>
+        <img
+          src={media.media_url}
+          alt="Post media"
+          style={{ width: "100%", height: "20vw", objectFit: "cover" }}
+        />
+      );
+    } else if (media.media_type === "video") {
+      return (
+        <video
+          style={{ width: "100%", height: "20vw",objectFit: "cover" }}
+          controls
+          autoPlay
+          muted
+          loop
+        >
           <source src={media.media_url} type="video/mp4" />
+          <source src={media.media_url} type="video/ogg" />
+          <source src="path_to_your_video.webm" type="video/webm" />
           Your browser does not support the video tag.
         </video>
       );
@@ -26,7 +42,7 @@ const PostCard = ({ post }) => {
     if (days < 1) {
       return `${duration.hours()} hours ago`;
     } else {
-      return end.format('YYYY-MM-DD');
+      return end.format("YYYY-MM-DD");
     }
   };
 
@@ -34,8 +50,12 @@ const PostCard = ({ post }) => {
     <article className="bg-white p-4 shadow rounded mb-4">
       <div className="flex items-center mb-4">
         <img
-          className="rounded-full h-12 w-12"
-          src={post.authorProfileImageUrl || "https://picsum.photos/200"}
+          className="rounded-full h-12 w-12 object-cover"
+          src={
+            post.authorProfileImageUrl
+              ? `${apiUrl}/${profileImageAssetUrl}/${post.authorProfileImageUrl}`
+              : blankProfile
+          }
           alt="Profile"
         />
         <div className="ml-3">
@@ -47,21 +67,27 @@ const PostCard = ({ post }) => {
       <p className="text-gray-700 mb-4">{post.content}</p>
       <div className="flex justify-between items-center">
         <button className="text-gray-500">Like ({post.likes.length})</button>
-        <button className="text-gray-500" onClick={() => setShowComments(!showComments)}>
+        <button
+          className="text-gray-500"
+          onClick={() => setShowComments(!showComments)}
+        >
           Comments ({post.comments.length})
         </button>
-        
       </div>
       {showComments && (
         <div>
           {post.comments.slice(0, 5).map((comment) => (
             <div key={comment.id} className="my-2">
               <p className="text-sm text-gray-600">{comment.content}</p>
-              <p className="text-xs text-gray-500">{formatDate(comment.updated_at)}</p>
+              <p className="text-xs text-gray-500">
+                {formatDate(comment.updated_at)}
+              </p>
             </div>
           ))}
           {post.comments.length > 5 && (
-            <button className="text-blue-500 text-sm">View more comments</button>
+            <button className="text-blue-500 text-sm">
+              View more comments
+            </button>
           )}
           {/* Placeholder for comment input */}
           <div className="mt-2">
