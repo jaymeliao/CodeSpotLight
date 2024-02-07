@@ -7,7 +7,7 @@ import "./SideBar.scss";
 import EditProfileForm from "../EditProfileForm/EditProfileForm";
 const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
 const apiUrl = process.env.REACT_APP_API_URL;
-
+const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder ;
 function truncateString(str, num = 10) {
   if (str.length <= num) {
     return str;
@@ -33,7 +33,7 @@ function SideBar(props) {
               className="rounded-full h-24 w-24 object-cover" // Ensure the image covers the area well
               src={
                 props.user?.profile_picture_url
-                  ? `${apiUrl}/${props.user.profile_picture_url}`
+                  ? `${apiUrl}/${profileImageAssetUrl}/${props.user.profile_picture_url}`
                   : blankProfile
               }
               alt="Profile picture"

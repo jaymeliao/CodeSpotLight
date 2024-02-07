@@ -13,7 +13,8 @@ import "./Header.scss";
 
 const blankProfile = process.env.PUBLIC_URL + '/images/blank-profile.png';
 const apiUrl = process.env.REACT_APP_API_URL;
-
+const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder ;
+console.log(profileImageAssetUrl)
 const DropdownMenu = ({ children }) => {
   
   return (
@@ -98,9 +99,9 @@ function Header({user,handleLogout}) {
           onClick={() => toggleDropdown("Account")}
         >
           <img
-            className="h-10 w-10 rounded-full"
+            className="h-10 w-10 rounded-full object-cover"
             //src={user?.profile_picture_url ? `${apiUrl}/${user.profile_picture_url}` : blankProfile}
-            src={user?.profile_picture_url ? `${apiUrl}/${user.profile_picture_url}?${new Date().getTime()}` : blankProfile}
+            src={user?.profile_picture_url ? `${apiUrl}/${profileImageAssetUrl}/${user.profile_picture_url}?${new Date().getTime()}` : blankProfile}
             //?${new Date().getTime()} to bypassing any image caching issues.
             alt="Profile picture"
           />
