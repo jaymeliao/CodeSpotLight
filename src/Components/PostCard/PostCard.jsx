@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment"; // You may need to install moment for date formatting
+import CommentSection from "../CommentSection/CommentSection";
 const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
 const apiUrl = process.env.REACT_APP_API_URL;
 const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder;
@@ -52,7 +53,7 @@ const PostCard = ({ post }) => {
     <article className="bg-white p-4 shadow rounded mb-4">
       <div className="flex items-center mb-4">
         <img
-          className="rounded-full h-12 w-12 object-cover"
+          className="rounded-full h-14 w-14 object-cover"
           src={
             post.authorProfileImageUrl
               ? `${apiUrl}/${profileImageAssetUrl}/${post.authorProfileImageUrl}`
@@ -62,16 +63,15 @@ const PostCard = ({ post }) => {
         />
         <div className="ml-3">
           <p className="text-md font-medium text-gray-700">{post.authorName}</p>
-        </div>
-        <div className="ml-1">
           <p className="text-sm text-gray-500">@{post.authorUsername}</p>
         </div>
+     
 
         <div className="ml-auto hidden md:flex flex-col">
-          <p className="text-xs text-blue-700">
+          <p className="text-xs text-gray-700">
             Created : {formatDate(post.created_at)}
           </p>
-          <p className="text-xs text-blue-300">
+          <p className="text-xs text-gray-500">
             Updated :{formatDate(post.updated_at)}
           </p>
         </div>
@@ -87,31 +87,7 @@ const PostCard = ({ post }) => {
           Comments ({post.comments.length})
         </button>
       </div>
-      {showComments && (
-        <div>
-          {post.comments.slice(0, 5).map((comment) => (
-            <div key={comment.id} className="my-4 flex justify-between">
-              <p className="text-sm text-gray-600">{comment.content}</p>
-              <p className="text-xs text-gray-500">
-                {formatDate(comment.updated_at)}
-              </p>
-            </div>
-          ))}
-          {post.comments.length > 5 && (
-            <button className="text-blue-500 text-sm">
-              View more comments
-            </button>
-          )}
-          {/* Placeholder for comment input */}
-          <div className="mt-2">
-            <input
-              type="text"
-              placeholder="Add a comment..."
-              className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-        </div>
-      )}
+      {showComments && <CommentSection post={post}/>}
     </article>
   );
 };
