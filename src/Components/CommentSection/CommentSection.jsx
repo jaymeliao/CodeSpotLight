@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import CommentItem from "../CommentItem/CommentItem";
 import axios from "axios";
+import EmojiPicker from "emoji-picker-react"; // Import the emoji picker
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function CommentSection({ post, postRef }) {
@@ -19,6 +21,13 @@ function CommentSection({ post, postRef }) {
     }
   };
 
+  //add emoji keyboard
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+  const onEmojiClick = (event, emojiObject) => {
+    console.log(event, emojiObject); // Debug to see what's being received
+    setCommentText((prevCommentText) => prevCommentText + emojiObject.emoji);
+  };
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (!commentText.trim()) return; // Prevent submitting empty comments
@@ -54,8 +63,31 @@ function CommentSection({ post, postRef }) {
 
   return (
     <div className="mt-6">
+      <div className="flex relative">
+        <div className="ml-auto">
+          <button
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            className="emoji-button"
+          >
+            😊 
+          </button>
+          {showEmojiPicker && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: "100%", // Position it right above the button
+                right: "0",
+                zIndex: 50, // Ensure it's on top of other content
+              }}
+            >
+              <EmojiPicker onEmojiClick={onEmojiClick} />
+            </div>
+          )}
+        </div>
+      </div>
       <form onSubmit={handleCommentSubmit}>
-        <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 hover:ring-2 hover:ring-inset hover:ring-black">
+
           <label htmlFor="comment" className="sr-only">
             Your comment
           </label>
@@ -80,10 +112,14 @@ function CommentSection({ post, postRef }) {
         <CommentItem key={comment.id} comment={comment} />
       ))}
       {comments.length > 3 && displayCount < comments.length && (
-        <button onClick={handleViewMore} className="text-blue-500">View more comments</button>
+        <button onClick={handleViewMore} className="text-blue-500">
+          View more comments
+        </button>
       )}
       {displayCount >= comments.length && comments.length > 3 && (
-        <button onClick={handleCollapse} className="text-blue-500">Show less</button>
+        <button onClick={handleCollapse} className="text-blue-500">
+          Show less
+        </button>
       )}
     </div>
   );
