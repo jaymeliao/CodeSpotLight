@@ -13,7 +13,7 @@
 
 # misc
 .DS_Store
-.env*
+
 #.env will uncomment in the producting and remove from repo
 .env.local
 .env.development.local
