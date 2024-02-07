@@ -18,7 +18,7 @@ const PostCard = ({ post }) => {
     } else if (media.media_type === "video") {
       return (
         <video
-          style={{ width: "100%", height: "20vw",objectFit: "cover" }}
+          style={{ width: "100%", height: "20vw", objectFit: "cover" }}
           controls
           autoPlay
           muted
@@ -34,15 +34,17 @@ const PostCard = ({ post }) => {
   };
 
   const formatDate = (date) => {
-    const now = moment(new Date()); //todays date
-    const end = moment(date); // another date
+    const now = moment(new Date()); // Today's date
+    const end = moment(date); // Another date
     const duration = moment.duration(now.diff(end));
-    const days = duration.asDays();
+    const minutes = duration.asMinutes(); // Get duration in minutes
 
-    if (days < 1) {
-      return `${duration.hours()} hours ago`;
+    if (minutes < 1) {
+      return `${Math.floor(duration.asSeconds())} seconds ago`; // Display seconds if less than a minute
+    } else if (minutes < 50) {
+      return `${Math.floor(minutes)} minutes ago`; // Display minutes if less than 50
     } else {
-      return end.format("YYYY-MM-DD");
+      return end.format("YYYY-MM-DD"); // Display date if more than 50 minutes
     }
   };
 
@@ -59,12 +61,23 @@ const PostCard = ({ post }) => {
           alt="Profile"
         />
         <div className="ml-3">
-          <p className="text-sm font-medium text-gray-700">{post.authorName}</p>
-          <p className="text-xs text-gray-500">@{post.authorUsername}</p>
+          <p className="text-md font-medium text-gray-700">{post.authorName}</p>
+        </div>
+        <div className="ml-1">
+          <p className="text-sm text-gray-500">@{post.authorUsername}</p>
+        </div>
+
+        <div className="ml-auto hidden md:flex flex-col">
+          <p className="text-xs text-blue-700">
+            Created : {formatDate(post.created_at)}
+          </p>
+          <p className="text-xs text-blue-300">
+            Updated :{formatDate(post.updated_at)}
+          </p>
         </div>
       </div>
       {post.media && post.media.length > 0 && renderMedia(post.media[0])}
-      <p className="text-gray-700 mb-4">{post.content}</p>
+      <p className="text-gray-700 my-4">{post.content}</p>
       <div className="flex justify-between items-center">
         <button className="text-gray-500">Like ({post.likes.length})</button>
         <button
@@ -77,7 +90,7 @@ const PostCard = ({ post }) => {
       {showComments && (
         <div>
           {post.comments.slice(0, 5).map((comment) => (
-            <div key={comment.id} className="my-2">
+            <div key={comment.id} className="my-4 flex justify-between">
               <p className="text-sm text-gray-600">{comment.content}</p>
               <p className="text-xs text-gray-500">
                 {formatDate(comment.updated_at)}
