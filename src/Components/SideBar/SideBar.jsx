@@ -3,7 +3,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag, faPen } from "@fortawesome/free-solid-svg-icons";
-import "./SideBar.scss";
 import EditProfileForm from "../EditProfileForm/EditProfileForm";
 const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
 const apiUrl = process.env.REACT_APP_API_URL;

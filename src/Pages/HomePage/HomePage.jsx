@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./HomePage.scss";
 import SideBar from "../../Components/SideBar/SideBar";
-import FeedPostsList from "../../Components/FeedPostsList/FeedPostsList";
+import PostsListSection from "../../Components/PostsListSection/PostsListSection";
 import Header from "../../Components/Header/Header";
 import axios from "axios";
+import ExtraSection from "../../Components/ExtraSection/ExtraSection";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function HomePage({ user, handleLogout, setUser }) {
@@ -69,9 +70,9 @@ function HomePage({ user, handleLogout, setUser }) {
         },
       });
       // Update the user prop with the new user data
-      const updatedUser = { ...user, ...formData};
+      const updatedUser = { ...user, ...formData };
       setUser(updatedUser);
-      console.log(updatedUser)
+      console.log(updatedUser);
       setShowModal(false);
     } catch (error) {
       console.log(error);
@@ -93,7 +94,12 @@ function HomePage({ user, handleLogout, setUser }) {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
       />
-      <FeedPostsList />
+      <div className="container mx-auto p-4">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <PostsListSection apiUrl={apiUrl} userId={user.id} />
+          <ExtraSection/>
+        </section>
+      </div>
     </div>
   );
 }
