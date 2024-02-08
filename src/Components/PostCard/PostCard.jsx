@@ -89,6 +89,12 @@ const PostCard = ({ post }) => {
       </div>
       {post.media && post.media.length > 0 && renderMedia(post.media[0])}
       <p className="text-gray-700 my-4">{post.content}</p>
+      {
+       
+        post.tags.map((tag)=><span style={{fontSize:"1rem",color:"gray"}}>#{tag} </span>)
+
+
+      }
       <div className="flex justify-between items-center">
         <button className="text-gray-500">Like ({post.likes.length})</button>
         <button
