@@ -14,7 +14,6 @@ import "./Header.scss";
 const blankProfile = process.env.PUBLIC_URL + '/images/blank-profile.png';
 const apiUrl = process.env.REACT_APP_API_URL;
 const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder ;
-console.log(profileImageAssetUrl)
 const DropdownMenu = ({ children }) => {
   
   return (

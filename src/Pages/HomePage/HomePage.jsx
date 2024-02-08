@@ -53,7 +53,7 @@ function HomePage({ user, handleLogout, setUser }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // i will umcomment this
+    e.preventDefault(); 
     const updatedFormData = new FormData();
     Object.keys(formData).forEach((key) => {
       if (formData[key] !== null && formData[key] !== user[key]) {
@@ -63,7 +63,7 @@ function HomePage({ user, handleLogout, setUser }) {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.patch(`${apiUrl}/user`, updatedFormData, {
+       await axios.patch(`${apiUrl}/user`, updatedFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -80,6 +80,50 @@ function HomePage({ user, handleLogout, setUser }) {
     }
   };
 
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`${apiUrl}/posts`);
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Failed to fetch posts", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  const switchPostList = async(postsType) => {
+    if (postsType === "likedPosts") {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${apiUrl}/posts/liked-posts`, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Failed to fetch liked posts", error);
+      }
+    } else {
+      //homeFeedPost
+      try {
+        const response = await axios.get(`${apiUrl}/posts`);
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Failed to fetch posts", error);
+      }
+    }
+  };
+
   return (
     <div className="jm-main-section min-h-screen flex bg-gray-200 text-gray-900">
       <Header user={user} handleLogout={handleLogout} />
@@ -93,11 +137,17 @@ function HomePage({ user, handleLogout, setUser }) {
         handleCancel={handleCancel}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
+        switchPostList={switchPostList}
       />
       <div className="container mx-auto p-4">
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <PostsListSection apiUrl={apiUrl} userId={user.id} />
-          <ExtraSection/>
+          <PostsListSection
+            posts={posts}
+            setPosts={setPosts}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
+          <ExtraSection />
         </section>
       </div>
     </div>

@@ -19,17 +19,9 @@ const formatDate = (date) => {
   }
 };
 
-// "content": "Great post!",
-// "created_at": "2024-02-07T13:25:50.000Z",
-// "updated_at": "2024-02-07T13:25:50.000Z",
-// "commenterUserId": 2,
-// "commenterUsername": "user2",
-// "commenterName": "User 2",
-// "commenterProfilePictureUrl": "pp2.jpeg"
-
 function CommentItem({ comment }) {
   return (
-    <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
+    <article class="py-3 px-6 text-base bg-white rounded-lg dark:bg-gray-900">
       <footer class="flex justify-between items-center mb-2">
         <div class="flex items-center">
           <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">

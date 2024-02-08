@@ -12,12 +12,11 @@ function PostCardSkeletonLoader(props) {
       </div>
       <div className="post-image mb-4"></div>
       <p className="text-gray-300 mb-4 bg-gray-300 rounded min">
-       {"placeholder"}
+        {"placeholder"}
       </p>
       <div className="flex justify-between">
         <button className="text-gray-300 bg-gray-300">Like</button>
         <button className="text-gray-300 bg-gray-300">Comment</button>
-        
       </div>
     </article>
   );

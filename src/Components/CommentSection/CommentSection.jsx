@@ -15,7 +15,7 @@ function CommentSection({ post, postRef }) {
   };
 
   const handleCollapse = () => {
-    setDisplayCount(3);
+    setDisplayCount(1);
     if (postRef && postRef.current) {
       postRef.current.scrollIntoView({ behavior: "smooth" });
     }

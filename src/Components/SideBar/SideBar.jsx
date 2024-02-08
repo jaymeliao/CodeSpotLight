@@ -6,7 +6,7 @@ import { faHashtag, faPen } from "@fortawesome/free-solid-svg-icons";
 import EditProfileForm from "../EditProfileForm/EditProfileForm";
 const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
 const apiUrl = process.env.REACT_APP_API_URL;
-const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder ;
+const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder;
 function truncateString(str, num = 10) {
   if (str.length <= num) {
     return str;
@@ -56,41 +56,27 @@ function SideBar(props) {
         )}
 
         <nav className="px-4">
-          <a
-            href="#"
-            className="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md mb-2"
+          <button
+            onClick={()=> props.switchPostList("homeFeed")}
+            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2 w-full"
           >
-            <span className="h-6 w-6 bg-blue-500 rounded mr-3"></span>
+            <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
             Home
-          </a>
-          <a
-            href="#"
-            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
+          </button>
+          <button
+            onClick={()=>props.switchPostList("myPosts")}
+            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2 w-full"
           >
             <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-            My Post
-          </a>
-          <a
-            href="#"
-            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
+            My Posts
+          </button>
+          <button
+            onClick={()=>props.switchPostList("likedPosts")}
+            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2 w-full"
           >
             <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-            Liked Post
-          </a>
-          <a
-            href="#"
-            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
-          >
-            <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-            BookMarked Post
-          </a>
-          <a
-            href="#"
-            className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md mb-2"
-          >
-            <span className="h-6 w-6 bg-gray-300 rounded mr-3"></span>
-            Draft
-          </a>
+            Liked Posts
+          </button>
         </nav>
 
         <div className="px-4 py-6 border-t border-gray-200">
