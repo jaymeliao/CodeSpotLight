@@ -5,7 +5,7 @@ import "./App.scss";
 import HomePage from "./Pages/HomePage/HomePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignUpPage from "./Pages/SignUpPage/SignUpPage";
-
+import AddPostForm from "./Components/AddPostForm/AddPostForm";
 
 function App() {
   const [user, setUser] = useState({});
@@ -105,34 +105,39 @@ function App() {
 
   return (
     <BrowserRouter>
-    <div className="App">
-      <Routes>
-        {loading ? ( // Show a loading indicator while fetching user data
-          <Route path="/" element={<></>} /> // Render the Loading component
-          ) : (
-          loggedIn ? (
+      <div className="App">
+        <Routes>
+          {loading ? ( // Show a loading indicator while fetching user data
+            <Route path="/" element={<></>} /> // Render the Loading component
+          ) : loggedIn ? (
             <Route
               path="/"
-              element={<HomePage user={user} setUser={setUser} handleLogout={handleLogout} />}
+              element={
+                <HomePage
+                  user={user}
+                  setUser={setUser}
+                  handleLogout={handleLogout}
+                />
+              }
             />
           ) : (
             <Route
               path="/"
               element={<LoginPage handleLogin={handleLogin} error={error} />}
             />
-          )
-        )}
-        <Route
-          path="/signup"
-          element={<SignUpPage handleLoginAfterSignup={handleLoginAfterSignup} />}
-        />
-        <Route
-          path="*"
-          element={<h1>Wrong Way : 404 not found</h1>}
-        />
-      </Routes>
-    </div>
-  </BrowserRouter>
+          )}
+          <Route
+            path="/signup"
+            element={
+              <SignUpPage handleLoginAfterSignup={handleLoginAfterSignup} />
+            }
+          />
+
+          <Route path="/publish" element={<AddPostForm />}/>
+          <Route path="*" element={<h1>Wrong Way : 404 not found</h1>} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

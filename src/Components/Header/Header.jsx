@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
+
 import {
   faPlus,
   faComment,
@@ -11,26 +13,23 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Header.scss";
 
-const blankProfile = process.env.PUBLIC_URL + '/images/blank-profile.png';
+const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
 const apiUrl = process.env.REACT_APP_API_URL;
-const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder ;
+const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder;
 const DropdownMenu = ({ children }) => {
-  
   return (
-    <div className="bg-white shadow-md rounded p-2 jm-dropdown-menu">{children}</div>
+    <div className="bg-white shadow-md rounded p-2 jm-dropdown-menu">
+      {children}
+    </div>
   );
 };
-function Header({user,handleLogout}) {
-
+function Header({ user, handleLogout }) {
   const navigate = useNavigate();
 
   const logoutAndNavigate = () => {
     handleLogout(); // Perform the logout logic passed from App
-    navigate('/'); // Then navigate to the homepage
+    navigate("/"); // Then navigate to the homepage
   };
-
-
-
 
   const [dropdown, setDropdown] = useState("");
   const toggleDropdown = (menu) => setDropdown(dropdown === menu ? "" : menu);
@@ -53,9 +52,9 @@ function Header({user,handleLogout}) {
           </div>
         </div>
       </div>
-  
+
       <nav className="flex items-center relative">
-        <div className="mx-4" onClick={() => toggleDropdown("plus")}>
+        <Link to="/publish">
           <div className="icon h-10 w-10 rounded-full">
             <FontAwesomeIcon
               className="h-5 w-5"
@@ -63,10 +62,7 @@ function Header({user,handleLogout}) {
               style={{ color: "black" }}
             />
           </div>
-          {dropdown === "plus" && (
-            <DropdownMenu>Plus Menu Content</DropdownMenu>
-          )}
-        </div>
+        </Link>
 
         <div className="mx-4" onClick={() => toggleDropdown("Chat")}>
           <div className="icon h-10 w-10 rounded-full">
@@ -77,7 +73,10 @@ function Header({user,handleLogout}) {
             />
           </div>
           {dropdown === "Chat" && (
-            <DropdownMenu>Chat Menu Content</DropdownMenu>
+            <DropdownMenu>
+              Chat Menu Content
+              <h3 className="text-blue-300">This Feature is coming soon !!</h3>
+            </DropdownMenu>
           )}
         </div>
 
@@ -90,7 +89,10 @@ function Header({user,handleLogout}) {
             />
           </div>
           {dropdown === "Notification" && (
-            <DropdownMenu>Notification Menu Content</DropdownMenu>
+            <DropdownMenu>
+              <h3>Notification Menu Content</h3>
+              <h3 className="text-blue-300">This Feature is coming soon !!</h3>
+            </DropdownMenu>
           )}
         </div>
         <div
@@ -100,7 +102,13 @@ function Header({user,handleLogout}) {
           <img
             className="h-10 w-10 rounded-full object-cover"
             //src={user?.profile_picture_url ? `${apiUrl}/${user.profile_picture_url}` : blankProfile}
-            src={user?.profile_picture_url ? `${apiUrl}/${profileImageAssetUrl}/${user.profile_picture_url}?${new Date().getTime()}` : blankProfile}
+            src={
+              user?.profile_picture_url
+                ? `${apiUrl}/${profileImageAssetUrl}/${
+                    user.profile_picture_url
+                  }?${new Date().getTime()}`
+                : blankProfile
+            }
             //?${new Date().getTime()} to bypassing any image caching issues.
             alt="Profile picture"
           />
