@@ -4,6 +4,7 @@ import CommentSection from "../CommentSection/CommentSection";
 const blankProfile = process.env.PUBLIC_URL + "/images/blank-profile.png";
 const apiUrl = process.env.REACT_APP_API_URL;
 const profileImageAssetUrl = process.env.REACT_APP_Profile_Image_Folder;
+const postMediaAssetAssetUrl = process.env.REACT_APP_Post_Media_Folder;
 const PostCard = ({ post }) => {
   const postRef = useRef(null); // Create a ref for the post
 
@@ -13,7 +14,7 @@ const PostCard = ({ post }) => {
     if (media.media_type === "image") {
       return (
         <img
-          src={media.media_url}
+          src={`${apiUrl}/${postMediaAssetAssetUrl}/${media.media_url}`}
           alt="Post media"
           style={{ width: "100%", height: "20vw", objectFit: "cover" }}
         />
@@ -27,9 +28,18 @@ const PostCard = ({ post }) => {
           muted
           loop
         >
-          <source src={media.media_url} type="video/mp4" />
-          <source src={media.media_url} type="video/ogg" />
-          <source src="path_to_your_video.webm" type="video/webm" />
+          <source
+            src={`${apiUrl}/${postMediaAssetAssetUrl}/${media.media_url}`}
+            type="video/mp4"
+          />
+          <source
+            src={`${apiUrl}/${postMediaAssetAssetUrl}/${media.media_url}`}
+            type="video/ogg"
+          />
+          <source
+            src={`${apiUrl}/${postMediaAssetAssetUrl}/${media.media_url}`}
+            type="video/webm"
+          />
           Your browser does not support the video tag.
         </video>
       );
@@ -67,7 +77,6 @@ const PostCard = ({ post }) => {
           <p className="text-md font-medium text-gray-700">{post.authorName}</p>
           <p className="text-sm text-gray-500">@{post.authorUsername}</p>
         </div>
-     
 
         <div className="ml-auto hidden md:flex flex-col">
           <p className="text-xs text-gray-700">
@@ -89,7 +98,7 @@ const PostCard = ({ post }) => {
           Comments ({post.comments.length})
         </button>
       </div>
-      {showComments && <CommentSection post={post} postRef={postRef}/>}
+      {showComments && <CommentSection post={post} postRef={postRef} />}
     </article>
   );
 };

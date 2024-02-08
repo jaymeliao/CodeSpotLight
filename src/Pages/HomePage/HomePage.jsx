@@ -53,7 +53,7 @@ function HomePage({ user, handleLogout, setUser }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    //e.preventDefault(); i should uncomment this !!
     const updatedFormData = new FormData();
     Object.keys(formData).forEach((key) => {
       if (formData[key] !== null && formData[key] !== user[key]) {
