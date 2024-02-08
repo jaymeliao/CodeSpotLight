@@ -100,7 +100,23 @@ function HomePage({ user, handleLogout, setUser }) {
   }, []);
 
   const switchPostList = async(postsType) => {
-    if (postsType === "likedPosts") {
+
+    if (postsType === "myPosts") {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${apiUrl}/posts/my-posts`, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Failed to fetch liked posts", error);
+      }
+    }
+
+    else if (postsType === "likedPosts") {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(`${apiUrl}/posts/liked-posts`, {
@@ -125,7 +141,7 @@ function HomePage({ user, handleLogout, setUser }) {
   };
 
   return (
-    <div className="jm-main-section min-h-screen flex bg-gray-200 text-gray-900">
+    <div className="jm-main-section min-h-screen flex bg-blue-300 text-gray-900">
       <Header user={user} handleLogout={handleLogout} />
       <SideBar
         user={user}
