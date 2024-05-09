@@ -54,7 +54,16 @@ function Header({ user, handleLogout }) {
       </div>
 
       <nav className="flex items-center relative">
-        <Link to="/publish">
+        <Link to="/publish" className="mx-4">
+          <div className="icon h-10 w-10 rounded-full">
+            <FontAwesomeIcon
+              className="h-5 w-5"
+              icon={faPlus}
+              style={{ color: "black" }}
+            />
+          </div>
+        </Link>
+        <Link to="/publish2" className="mx-4">
           <div className="icon h-10 w-10 rounded-full">
             <FontAwesomeIcon
               className="h-5 w-5"

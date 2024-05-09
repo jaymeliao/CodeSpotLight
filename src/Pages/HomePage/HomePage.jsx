@@ -5,6 +5,8 @@ import PostsListSection from "../../Components/PostsListSection/PostsListSection
 import Header from "../../Components/Header/Header";
 import axios from "axios";
 import ExtraSection from "../../Components/ExtraSection/ExtraSection";
+import Cookies from "js-cookie"; // Import Cookies library
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function HomePage({ user, handleLogout, setUser }) {
@@ -62,8 +64,10 @@ function HomePage({ user, handleLogout, setUser }) {
     });
 
     try {
-      const token = localStorage.getItem("token");
-       await axios.patch(`${apiUrl}/user`, updatedFormData, {
+      //const token = sessionStorage.getItem("token");
+      const token = Cookies.get("token"); // Get token from cookie
+
+      await axios.patch(`${apiUrl}/user`, updatedFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -99,11 +103,12 @@ function HomePage({ user, handleLogout, setUser }) {
     fetchPosts();
   }, []);
 
-  const switchPostList = async(postsType) => {
-
+  const switchPostList = async (postsType) => {
     if (postsType === "myPosts") {
       try {
-        const token = localStorage.getItem("token");
+        //const token = sessionStorage.getItem("token");
+        const token = Cookies.get("token"); // Get token from cookie
+
         const response = await axios.get(`${apiUrl}/posts/my-posts`, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -114,11 +119,11 @@ function HomePage({ user, handleLogout, setUser }) {
       } catch (error) {
         console.error("Failed to fetch liked posts", error);
       }
-    }
-
-    else if (postsType === "likedPosts") {
+    } else if (postsType === "likedPosts") {
       try {
-        const token = localStorage.getItem("token");
+        //const token = sessionStorage.getItem("token");
+        const token = Cookies.get("token"); // Get token from cookie
+
         const response = await axios.get(`${apiUrl}/posts/liked-posts`, {
           headers: {
             "Content-Type": "multipart/form-data",

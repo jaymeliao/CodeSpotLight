@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CommentItem from "../CommentItem/CommentItem";
 import axios from "axios";
 import EmojiPicker from "emoji-picker-react"; // Import the emoji picker
-
+import Cookies from "js-cookie";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function CommentSection({ post, postRef }) {
@@ -33,7 +33,9 @@ function CommentSection({ post, postRef }) {
     if (!commentText.trim()) return; // Prevent submitting empty comments
 
     try {
-      const token = localStorage.getItem("token");
+      //const token = sessionStorage.getItem("token");
+      const token = Cookies.get("token"); // Get token from cookie
+
       // Use axios to post the comment
       const response = await axios.post(
         `${apiUrl}/comments/new-comment`,
@@ -69,7 +71,7 @@ function CommentSection({ post, postRef }) {
             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
             className="emoji-button"
           >
-            😊 
+            😊
           </button>
           {showEmojiPicker && (
             <div
@@ -87,7 +89,6 @@ function CommentSection({ post, postRef }) {
       </div>
       <form onSubmit={handleCommentSubmit}>
         <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 hover:ring-2 hover:ring-inset hover:ring-black">
-
           <label htmlFor="comment" className="sr-only">
             Your comment
           </label>

@@ -91,7 +91,7 @@ const PostCard = ({ post }) => {
       <p className="text-gray-700 my-4">{post.content}</p>
       {
        
-        post.tags.map((tag)=><span style={{fontSize:"1rem",color:"gray"}}>#{tag} </span>)
+        post.tags.map((tag,index)=><span key={index} style={{fontSize:"1rem",color:"gray"}}>#{tag} </span>)
 
 
       }

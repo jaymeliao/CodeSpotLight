@@ -1,0 +1,11 @@
+.drag-area {
+  border: 2px dashed #d1d5db;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  &.highlight {
+    background-color: #f0fdf4;
+    border-color: #86efac;
+  }  
+}

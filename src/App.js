@@ -6,7 +6,8 @@ import HomePage from "./Pages/HomePage/HomePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignUpPage from "./Pages/SignUpPage/SignUpPage";
 import AddPostForm from "./Components/AddPostForm/AddPostForm";
-
+import AddPostForm2 from "./Components/_AddPostForm/_AddPostForm";
+import Cookies from "js-cookie";
 function App() {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
@@ -14,12 +15,10 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const apiUrl = process.env.REACT_APP_API_URL;
-
-  /*
-   * Component Mount, if JWT token is set the user is still considered logged in
-   */
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    //const token = sessionStorage.getItem("token");
+    const token = Cookies.get("token"); // or use document.cookie, which needs more setup and config
+
     const getUserData = async () => {
       try {
         const response = await axios.get(`${apiUrl}/user`, {
@@ -51,7 +50,8 @@ function App() {
         password: event.target.password.value,
       });
 
-      localStorage.setItem("token", response.data.token); // save token in localStorage
+      //sessionStorage.setItem("token", response.data.token); // save token in sessionStorage
+      Cookies.set("token", response.data.token, { expires: 7 }); // Save token in cookie for 7 days
 
       if (response.data.token) {
         // get user data using token
@@ -77,7 +77,9 @@ function App() {
         password,
       });
 
-      localStorage.setItem("token", response.data.token);
+      //sessionStorage.setItem("token", response.data.token);
+      Cookies.set("token", response.data.token, { expires: 7 });
+
       const userResponse = await axios.get(`${apiUrl}/user`, {
         headers: {
           Authorization: `Bearer ${response.data.token}`,
@@ -94,11 +96,9 @@ function App() {
     }
   };
 
-  /*
-   * Logout of application, clears localStorage JWT token and set state to logged out
-   */
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    //sessionStorage.removeItem("token");
+    Cookies.remove("token"); // Remove token from cookie
     setLoggedIn(false);
     setUser({});
   };
@@ -133,7 +133,8 @@ function App() {
             }
           />
 
-          <Route path="/publish" element={<AddPostForm />}/>
+          <Route path="/publish" element={<AddPostForm />} />
+          <Route path="/publish2" element={<AddPostForm2 />} />
           <Route path="*" element={<h1>Wrong Way : 404 not found</h1>} />
         </Routes>
       </div>
